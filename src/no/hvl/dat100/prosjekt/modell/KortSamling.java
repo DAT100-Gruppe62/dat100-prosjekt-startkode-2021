@@ -58,11 +58,7 @@ public class KortSamling {
 	 */
 	public boolean erTom() {
 		
-		// TODO - START
-				
-		throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - END
+		return antall > 0 ? false : true;
 	}
 
 	/**

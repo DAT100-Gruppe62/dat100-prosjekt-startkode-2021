@@ -92,10 +92,9 @@ public class KortSamling {
 	 */
 	public void fjernAlle() {
 		
-		// TODO - START
+		samling = new Kort[MAKS_KORT];
+		antall = 0;
 		
-		throw new UnsupportedOperationException(TODO.method());
-		// TODO - END
 	}
 	
 	/**

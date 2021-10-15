@@ -73,10 +73,8 @@ public class KortSamling {
 	 */
 	public void leggTil(Kort kort) {
 		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-		// TODO - END
+		samling[antall] = kort;
+		antall++;
 		
 	}
 	
@@ -144,11 +142,15 @@ public class KortSamling {
 	 */
 	public boolean har(Kort kort) {
 		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-		// return false;
-		// TODO - END
+		int i = 0;
+
+		while(i<antall) {
+			if(kort != null && samling[i].lik(kort)) {
+					return true;
+			}
+			i++;
+		}
+		return false;
 		
 	}
 

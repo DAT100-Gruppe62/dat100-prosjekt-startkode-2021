@@ -125,12 +125,14 @@ public class KortSamling {
 	 *         null.
 	 */
 	public Kort taSiste() {
-		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - END
+		if(antall > 0) {
+			Kort kopiAvSiste = new Kort(samling[antall-1].getFarge(), samling[antall-1].getVerdi());
+			samling[antall-1] = null;
+			antall--;
+			return kopiAvSiste;
+		}else {
+			return null;
+		}
 	}
 	
 	/**

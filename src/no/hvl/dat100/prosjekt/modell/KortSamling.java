@@ -22,10 +22,8 @@ public class KortSamling {
 	 */
 	public KortSamling() {
 		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.constructor("KortSamling"));
-		// TODO - END
+		antall = 0;
+		samling = new Kort[MAKS_KORT];
 	}
 
 	/**
@@ -50,11 +48,7 @@ public class KortSamling {
 	 */
 	public int getAntalKort() {
 		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - END
+		return antall;
 	}
 	
 	/**
@@ -64,11 +58,7 @@ public class KortSamling {
 	 */
 	public boolean erTom() {
 		
-		// TODO - START
-				
-		throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - END
+		return antall > 0 ? false : true;
 	}
 
 	/**
@@ -79,10 +69,8 @@ public class KortSamling {
 	 */
 	public void leggTil(Kort kort) {
 		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-		// TODO - END
+		samling[antall] = kort;
+		antall++;
 		
 	}
 	
@@ -104,10 +92,9 @@ public class KortSamling {
 	 */
 	public void fjernAlle() {
 		
-		// TODO - START
+		samling = new Kort[MAKS_KORT];
+		antall = 0;
 		
-		throw new UnsupportedOperationException(TODO.method());
-		// TODO - END
 	}
 	
 	/**
@@ -133,12 +120,14 @@ public class KortSamling {
 	 *         null.
 	 */
 	public Kort taSiste() {
-		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - END
+		if(antall > 0) {
+			Kort kopiAvSiste = new Kort(samling[antall-1].getFarge(), samling[antall-1].getVerdi());
+			samling[antall-1] = null;
+			antall--;
+			return kopiAvSiste;
+		}else {
+			return null;
+		}
 	}
 	
 	/**
@@ -150,11 +139,15 @@ public class KortSamling {
 	 */
 	public boolean har(Kort kort) {
 		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-		// return false;
-		// TODO - END
+		int i = 0;
+
+		while(i<antall) {
+			if(kort != null && samling[i].lik(kort)) {
+					return true;
+			}
+			i++;
+		}
+		return false;
 		
 	}
 

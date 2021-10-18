@@ -27,7 +27,9 @@ public class Spill {
 	public final static int ANTALL_KORT_START = Regler.ANTALL_KORT_START;
 	
 	public Spill() {
-		
+
+		nord = new NordSpiller(Spillere.NORD);
+		syd = new SydSpiller(Spillere.SYD);
 		bord = new Bord();
 	}
 	
@@ -71,8 +73,12 @@ public class Spill {
 	 * av en klasse laget av gruppen (implementeres i oppgave 3).
 	 */
 	public void start() {
-		
-		delutKort();
+	    
+		bord.getBunkeFra().fjernAlle();
+	    bord.getBunkeFra().leggTilAlle();
+	    KortUtils.stokk(bord.getBunkeFra());
+	    delutKort();
+	    bord.leggNedBunkeTil(bord.getBunkeFra().taSiste());
 
 	}
 
@@ -82,18 +88,11 @@ public class Spill {
 	 */
 	private void delutKort() {
 
-		KortSamling fullKortSamling = new KortSamling();
-		fullKortSamling.leggTilAlle();
-		
-		Kort[] alleKort = fullKortSamling.getAllekort();
-		
-		for(int i = 0; i < fullKortSamling.getAntalKort() ; i++) {
-			if ( i % 2 == 0 ) {
-				nord.leggTilKort(alleKort[i]);
-			} else {
-				syd.leggTilKort(alleKort[i]);
-			}
-		}
+	    for(int i=0; i<ANTALL_KORT_START; i++) {
+	        nord.leggTilKort(bord.getBunkeFra().taSiste());
+	        syd.leggTilKort(bord.getBunkeFra().taSiste());
+	    }        
+	    
 	}
 
 	/**

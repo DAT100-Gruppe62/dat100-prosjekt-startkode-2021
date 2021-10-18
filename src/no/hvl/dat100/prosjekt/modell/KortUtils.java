@@ -1,5 +1,6 @@
 package no.hvl.dat100.prosjekt.modell;
 
+import java.util.Arrays;
 import java.util.Random;
 
 import no.hvl.dat100.prosjekt.TODO;
@@ -17,10 +18,15 @@ public class KortUtils {
 	
 	public static void sorter(KortSamling samling) {
 		
-		// TODO - START
+		Kort[] samlingArr = samling.getAllekort();
 		
-		throw new UnsupportedOperationException(TODO.method());
-		// TODO - END
+		Arrays.sort(samlingArr);
+		
+		samling.fjernAlle();
+		
+		for(Kort k : samlingArr) {
+			samling.leggTil(k);
+		}
 	}
 	
 	/**
@@ -31,10 +37,24 @@ public class KortUtils {
 	 */
 	public static void stokk(KortSamling samling) {
 		
-		// TODO - START
+		Kort[] samlingArr = samling.getAllekort();		
 		
-		throw new UnsupportedOperationException(TODO.method());
-		// TODO - END
+		samling.fjernAlle();
+		
+		Random n = new Random();
+		
+		int limit = samlingArr.length;
+		
+		int i = 0;
+		while(i<limit) {
+			int j= n.nextInt(limit);
+			Kort k = samlingArr[j]; 
+			if(!samling.har(k)) {
+				samling.leggTil(samlingArr[j]);
+				i++;
+			}			
+			
+		}
 	}
 	
 }

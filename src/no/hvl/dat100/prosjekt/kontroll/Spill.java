@@ -130,7 +130,8 @@ public class Spill {
 		
 		// TODO - START
 		// Hint: se på hvilke metoder som er tilgjengelig på en spiller
-		throw new UnsupportedOperationException(TODO.method());
+		
+		return spiller.nesteHandling(spiller.getHand().taSiste());
 
 		// TODO - END
 	}

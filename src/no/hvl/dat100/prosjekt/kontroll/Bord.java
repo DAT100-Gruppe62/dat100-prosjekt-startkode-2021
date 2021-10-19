@@ -104,7 +104,7 @@ public class Bord {
 	 */
 	public void vendOversteFraBunke() {
 		
-		Kort sisteKort = bunkeFra.taSiste();
+		Kort sisteKort = taOversteFraBunke();
 		bunkeTil.leggTil(sisteKort);
 	}
 		
@@ -140,7 +140,6 @@ public class Bord {
 
 		Kort sisteKortTilBunken = bunkeTil.taSiste();
 		
-		bunkeTil.fjern(sisteKortTilBunken);
 		Kort[] kortFraTilBunken = bunkeTil.getAllekort();
 			
 		for (Kort k : kortFraTilBunken) {

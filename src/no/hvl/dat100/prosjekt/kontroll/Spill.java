@@ -28,9 +28,10 @@ public class Spill {
 	
 	public Spill() {
 
+		bord = new Bord();
+		
 		nord = new NordSpiller(Spillere.NORD);
 		syd = new SydSpiller(Spillere.SYD);
-		bord = new Bord();
 	}
 	
 	/**
@@ -107,7 +108,7 @@ public class Spill {
 	 */
 	public Kort trekkFraBunke(ISpiller spiller) {
 		
-		if (bord.antallBunkeFra() == 0) {
+		if(bord.bunkefraTom()) {
 			bord.snuTilBunken();
 		}
 		
@@ -150,7 +151,8 @@ public class Spill {
 	 */
 	public boolean leggnedKort(ISpiller spiller, Kort kort) {
 		
-		if (spiller.getHand().har(kort)) {
+		KortSamling samling = spiller.getHand();
+		if(samling.har(kort)) {
 			spiller.fjernKort(kort);
 			bord.leggNedBunkeTil(kort);
 			spiller.setAntallTrekk(0);
@@ -195,13 +197,18 @@ public class Spill {
 		// TODO - END
 		
 		switch (handling.getType()) {
-		case TREKK:
-			kort = this.trekkFraBunke(spiller);
-		case FORBI:
-			break;
-		case LEGGNED:
-			kort = handling.getKort();
-			this.leggnedKort(spiller, kort);
+			case TREKK:
+				kort = this.trekkFraBunke(spiller);
+				break;
+			case FORBI:
+				forbiSpiller(spiller);
+				break;
+			case LEGGNED:
+				kort = handling.getKort();
+				this.leggnedKort(spiller, kort);
+				break;
+			default:
+				break;
 		}
 		
 		return kort;

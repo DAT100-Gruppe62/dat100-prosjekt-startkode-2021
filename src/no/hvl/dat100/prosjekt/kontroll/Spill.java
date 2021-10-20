@@ -32,6 +32,7 @@ public class Spill {
 		
 		nord = new NordSpiller(Spillere.NORD);
 		syd = new SydSpiller(Spillere.SYD);
+		
 	}
 	
 	/**
@@ -132,7 +133,9 @@ public class Spill {
 		// TODO - START
 		// Hint: se på hvilke metoder som er tilgjengelig på en spiller
 		
-		return spiller.nesteHandling(spiller.getHand().taSiste());
+		return spiller.nesteHandling(bord.seOversteBunkeTil());
+		
+		
 
 		// TODO - END
 	}

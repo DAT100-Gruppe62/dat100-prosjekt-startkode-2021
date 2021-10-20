@@ -146,6 +146,8 @@ public class Bord {
 			bunkeFra.leggTil(k);
 		}
 		
+		KortUtils.stokk(bunkeFra);
+		
 		bunkeTil.fjernAlle();
 		bunkeTil.leggTil(sisteKortTilBunken);
 	}

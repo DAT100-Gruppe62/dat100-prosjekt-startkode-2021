@@ -1,11 +1,15 @@
 package no.hvl.dat100.prosjekt.kontroll;
 
+import java.util.Random;
+
 import no.hvl.dat100.prosjekt.TODO;
 import no.hvl.dat100.prosjekt.kontroll.dommer.Regler;
 import no.hvl.dat100.prosjekt.kontroll.spill.Handling;
 import no.hvl.dat100.prosjekt.kontroll.spill.HandlingsType;
 import no.hvl.dat100.prosjekt.kontroll.spill.Spillere;
 import no.hvl.dat100.prosjekt.modell.Kort;
+import no.hvl.dat100.prosjekt.modell.KortSamling;
+import no.hvl.dat100.prosjekt.modell.Kortfarge;
 
 /**
  * Klasse som for å representere en vriåtter syd-spiller. Strategien er å lete
@@ -37,11 +41,78 @@ public class SydSpiller extends Spiller {
 	@Override
 	public Handling nesteHandling(Kort topp) {
 
-		// TODO - START
-		/* first-fit strategi */
-	
-		throw new UnsupportedOperationException(TODO.method());
-	
-		// TODO - END
+		// ArrayLister for de kort vi har og kan spille
+		Kort[] hand = getHand().getAllekort();
+		KortSamling sameFarge = new KortSamling();
+		KortSamling sameVerdi = new KortSamling();
+		KortSamling attere = new KortSamling();
+		KortSamling ulovlig = new KortSamling();
+		
+		int fargeLngth = Kortfarge.values().length;
+		
+		//colorCount should keep track of the number of colors in ulovlig 
+		int[] colorCount = new int[fargeLngth];
+		
+		// Gå igjennom kort å finn ut hvilke som kan spilles
+		for (Kort k : hand) {
+			if (Regler.kanLeggeNed(k, topp)) {
+				if(k.getVerdi() == topp.getVerdi()) {
+					sameVerdi.leggTil(k);
+				} else if(k.getFarge() == topp.getFarge()){
+					sameFarge.leggTil(k);
+				} else if(Regler.atter(k)) {
+					attere.leggTil(k);
+				}
+			} else {
+				colorCount[k.getFarge().ordinal()]++;
+				ulovlig.leggTil(k);
+			}
+		}
+		
+		Kort spill = null;
+		Kort[] spillFra = null;
+		
+		if (!sameVerdi.erTom()) {
+			spillFra = sameVerdi.getAllekort();
+			
+			if(!ulovlig.erTom()) {
+				Kortfarge farge= null;
+				int antalFarge = 0;
+
+				for(Kort k : sameVerdi.getAllekort()) {
+					int currentColorCount = colorCount[k.getFarge().ordinal()];
+					if(currentColorCount>antalFarge) {
+						antalFarge = currentColorCount;
+						farge = k.getFarge();
+					}
+				}
+				if(farge != null) spill = new Kort(farge, topp.getVerdi());				
+			} 
+		} else if (!sameFarge.erTom())  {
+			spillFra = sameFarge.getAllekort();
+		} else if (!attere.erTom())  {
+			spillFra = attere.getAllekort();
+		}
+
+
+		Handling handling = null;
+		if(spill != null) {
+			
+			handling = new Handling(HandlingsType.LEGGNED, spill);
+			
+		} else if (spillFra != null) {
+			spill = spillFra[0];
+			handling = new Handling(HandlingsType.LEGGNED, spill);
+			// setAntallTrekk(0);
+			
+		} else if (getAntallTrekk() < Regler.maksTrekk()) {
+			handling = new Handling(HandlingsType.TREKK, null);
+		} else {
+			handling = new Handling(HandlingsType.FORBI, null);
+			// setAntallTrekk(0);
+		}
+
+		return handling;
 	}
+	
 }

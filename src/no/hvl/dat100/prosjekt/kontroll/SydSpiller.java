@@ -71,9 +71,10 @@ public class SydSpiller extends Spiller {
 		
 		Kort spill = null;
 		Kort[] spillFra = null;
-		KortSamling spillSamling = new KortSamling();
 		
 		if (!sameVerdi.erTom()) {
+			spillFra = sameVerdi.getAllekort();
+			
 			if(!ulovlig.erTom()) {
 				Kortfarge farge= null;
 				int antalFarge = 0;
@@ -85,15 +86,8 @@ public class SydSpiller extends Spiller {
 						farge = k.getFarge();
 					}
 				}
-				
-				spillSamling.leggTil(new Kort(farge, topp.getVerdi()));
-				
-				spillFra = spillSamling.getAllekort();
-				
-			} else {
-				spillFra = sameVerdi.getAllekort();
-			}
-			
+				if(farge != null) spill = new Kort(farge, topp.getVerdi());				
+			} 
 		} else if (!sameFarge.erTom())  {
 			spillFra = sameFarge.getAllekort();
 		} else if (!attere.erTom())  {
@@ -102,8 +96,11 @@ public class SydSpiller extends Spiller {
 
 
 		Handling handling = null;
-		
-		if (spillFra != null) {
+		if(spill != null) {
+			
+			handling = new Handling(HandlingsType.LEGGNED, spill);
+			
+		} else if (spillFra != null) {
 			spill = spillFra[0];
 			handling = new Handling(HandlingsType.LEGGNED, spill);
 			// setAntallTrekk(0);
